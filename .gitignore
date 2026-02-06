@@ -1,0 +1,57 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+<<<<<<< HEAD:pizzaApp/.gitignore
+/dist
+=======
+<<<<<<< HEAD
+/build
+=======
+/dist
+>>>>>>> 81a08c0 (Initial commit)
+>>>>>>> 98e759980ab2d2c2a3fb398bbe56fb561fa52f9e:.gitignore
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+<<<<<<< HEAD:pizzaApp/.gitignore
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 98e759980ab2d2c2a3fb398bbe56fb561fa52f9e:.gitignore
+/.nx
+/.nx/cache
+/.vscode/*
+!/.vscode/extensions.json
+.idea
+<<<<<<< HEAD:pizzaApp/.gitignore
+=======
+>>>>>>> 81a08c0 (Initial commit)
+>>>>>>> 98e759980ab2d2c2a3fb398bbe56fb561fa52f9e:.gitignore
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+<<<<<<< HEAD:pizzaApp/.gitignore
+
+# Optional eslint cache
+.eslintcache
+=======
+<<<<<<< HEAD
+=======
+
+# Optional eslint cache
+.eslintcache
+>>>>>>> 81a08c0 (Initial commit)
+>>>>>>> 98e759980ab2d2c2a3fb398bbe56fb561fa52f9e:.gitignore
