@@ -29,7 +29,11 @@ const PizzaCard: React.FC<PizzaProps> = ({
 
   return (
     <IonCard>
-      <img src={image} alt={name} />
+       <img src={image} alt={name} style={{
+    width: "100%",
+    height: "500px",
+    objectFit: "cover"
+  }} />
 
       <IonCardHeader>
         <IonCardTitle>{name}</IonCardTitle>

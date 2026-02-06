@@ -15,6 +15,8 @@
   import Tab1 from './pages/Tab1';
   import Tab2 from './pages/Tab2';
   import Tab3 from './pages/Tab3';
+  import Login from "./pages/Login";
+import PrivateRoute from "./routes/PrivateRoute";
 
   /* Core CSS required for Ionic components to work properly */
   import '@ionic/react/css/core.css';
@@ -54,19 +56,21 @@
         <IonTabs>
           <IonRouterOutlet>
             <Route exact path="/splash">
-    <Splash />
-  </Route>
-
-  <Route path="/tab1">
-    <Tab1 />
-  </Route>
-  <Route path="/tab2">
-    <Tab2 />
-  </Route>
-  <Route path="/tab3">
-    <Tab3 />
-  </Route>
-
+                  <Splash />
+            </Route>
+            <Route exact path="/login">
+                <Login />
+            </Route>
+            <Route path="/tab1">
+              <Tab1 />
+            </Route>
+            <Route path="/tab2">
+              <Tab2 />
+            </Route>
+            <Route path="/tab3">
+              <Tab3 />
+            </Route>
+    
   <Route exact path="/">
     <Redirect to="/splash" />
   </Route>

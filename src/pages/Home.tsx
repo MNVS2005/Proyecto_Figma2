@@ -10,28 +10,30 @@ import {
   IonButton
 } from "@ionic/react";
 import PizzaCard from "../components/PizzaCard";
-
+import margaritaImg from "/assets/margarita.png";
+import pepperoniImg from "/assets/pepperoni.png";
+import hawaianaImg from "/assets/hawaiana.png";
 const pizzas = [
   {
     name: "Pizza Margarita",
     description: "Clásica pizza italiana con sabores tradicionales",
     ingredients: "Tomate, mozzarella, albahaca",
     price: 8.99,
-    image: "https://images.unsplash.com/photo-1601924928584-63b9d90a8b6f"
+    image: margaritaImg
   },
   {
     name: "Pizza Pepperoni",
     description: "La favorita de todos con extra de pepperoni",
     ingredients: "Tomate, mozzarella, pepperoni",
     price: 10.99,
-    image: "https://images.unsplash.com/photo-1548365328-9f547fb0953c"
+    image: pepperoniImg
   },
   {
     name: "Pizza Hawaiana",
     description: "Dulce y salada, una combinación única",
     ingredients: "Tomate, mozzarella, jamón, piña",
     price: 11.99,
-    image: "https://images.unsplash.com/photo-1594007654729-407eedc4be65"
+    image: hawaianaImg
   }
 ];
 

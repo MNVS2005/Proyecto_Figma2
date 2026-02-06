@@ -10,11 +10,18 @@
   opacity: 0;
   transform: scale(0.5);
   transition: all 0.8s ease;
+ left: 0;
+    line-height: 200px;
+    margin-top: -100px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 100%;
 }
 
 .logo.show {
   opacity: 1;
-  transform: scale(1);
+  transform: scale(2);
 }
 
 .logo img {
@@ -23,6 +30,7 @@
   border-radius: 50%;
   background: white;
   padding: 12px;
+ 
 }
 
 .welcome-text {
@@ -33,6 +41,13 @@
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.8s ease;
+  left: 0;
+    line-height: 200px;
+    margin-top: -100px;
+    position: absolute;
+    text-align: center;
+    top: 60%;
+    width: 100%;
 }
 
 .welcome-text.show {

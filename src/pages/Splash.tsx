@@ -4,7 +4,7 @@ import {
 } from "@ionic/react";
 import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
-
+import "./Splash.css";
 const Splash: React.FC = () => {
   const history = useHistory();
   const logoRef = useRef<HTMLDivElement>(null);
