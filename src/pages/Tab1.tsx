@@ -11,7 +11,9 @@ import {
 } from "@ionic/react";
 
 import PizzaCard from "../components/PizzaCard";
-
+import { personCircle } from "ionicons/icons";
+import { IonIcon, IonButtons } from "@ionic/react";
+import { useHistory } from "react-router-dom";
 const pizzas = [
   {
     name: "Pizza Margarita",
@@ -37,14 +39,20 @@ const pizzas = [
 ];
 
 const Tab1: React.FC = () => {
+  const history = useHistory();
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar style={{ "--background": "#d50000", color: "white" }}>
           <IonTitle>
-            ¡Bienvenido/a, USERNAME!
+            ¡Bienvenido a PizzaUP <br />
             <div style={{ fontSize: "14px" }}>¿Qué desea?</div>
           </IonTitle>
+          <IonButtons slot="end">
+              <IonButton onClick={() => history.push("/profile")}>
+                <IonIcon icon={personCircle} style={{ fontSize: "28px", color: "white" }} />
+              </IonButton>
+            </IonButtons>
         </IonToolbar>
       </IonHeader>
 
