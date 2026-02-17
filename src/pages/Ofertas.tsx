@@ -7,53 +7,63 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonButton
+  IonButton,
+  IonButtons,
+  IonIcon
 } from "@ionic/react";
-
-import PizzaCard from "../components/PizzaCard";
-import { personCircle, cart } from "ionicons/icons";
-import { IonIcon, IonButtons } from "@ionic/react";
+import { arrowBack, cart } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
+import PizzaCard from "../components/PizzaCard";
 import { useCart } from "../context/CartContext";
 import CartModal from "../components/CartModal";
 import { useState } from "react";
-const pizzas = [
+
+const specialOffers = [
   {
     name: "Pizza Margarita",
-    description: "Clásica pizza italiana con sabores tradicionales",
+    description: "¡OFERTA! Clásica pizza italiana con sabores tradicionales - 50% OFF",
     ingredients: "Tomate, mozzarella, albahaca",
-    price: 8.99,
+    price: 4.49,
     image: "/margarita.png"
   },
   {
     name: "Pizza Pepperoni",
-    description: "La favorita de todos con extra de pepperoni",
+    description: "¡OFERTA! La favorita de todos con extra de pepperoni - 40% OFF",
     ingredients: "Tomate, mozzarella, pepperoni",
-    price: 10.99,
+    price: 6.59,
     image: "/pepperoni.png"
   },
   {
     name: "Pizza Hawaiana",
-    description: "Dulce y salada, una combinación única",
+    description: "¡OFERTA! Dulce y salada, una combinación única - 35% OFF",
     ingredients: "Tomate, mozzarella, jamón, piña",
-    price: 11.99,
+    price: 7.79,
     image: "/hawaiana.png"
+  },
+  {
+    name: "Pizza Cuatro Quesos",
+    description: "¡EXCLUSIVA! Blend especial de cuatro quesos - 45% OFF",
+    ingredients: "Mozzarella, cheddar, azul, ricotta",
+    price: 6.49,
+    image: "/margarita.png"
   }
 ];
 
-const Tab1: React.FC = () => {
+const Ofertas: React.FC = () => {
   const history = useHistory();
   const { items } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
-  
+
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar style={{ "--background": "#d50000", color: "white" }}>
-          <IonTitle>
-            ¡Bienvenido a PizzaUP <br />
-            <div style={{ fontSize: "14px" }}>¿Qué desea?</div>
-          </IonTitle>
+        <IonToolbar style={{ "--background": "#d50000" } as any}>
+          <IonButtons slot="start">
+            <IonButton onClick={() => history.push("/tab1")}>
+              <IonIcon icon={arrowBack} style={{ color: "white" }} />
+            </IonButton>
+          </IonButtons>
+          <IonTitle style={{ color: "white" }}>¡OFERTAS ESPECIALES!</IonTitle>
           <IonButtons slot="end">
             <IonButton onClick={() => setIsCartOpen(true)} style={{ position: "relative" }}>
               <IonIcon icon={cart} style={{ fontSize: "28px", color: "white" }} />
@@ -73,28 +83,19 @@ const Tab1: React.FC = () => {
                 </div>
               )}
             </IonButton>
-            <IonButton onClick={() => history.push("/profile")}>
-              <IonIcon icon={personCircle} style={{ fontSize: "28px", color: "white" }} />
-            </IonButton>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
 
       <IonContent>
         <div style={{ padding: "16px", textAlign: "center" }}>
-          <IonButton
-            shape="round"
-            size="large"
-            style={{ "--background": "#ff8a50" }}
-            onClick={() => history.push("/ofertas")}
-          >
-            ¡OFERTAS ESPECIALES!
-          </IonButton>
+          <h2 style={{ color: "#d50000" }}>🔥 DESCUENTOS INCREÍBLES 🔥</h2>
+          <p style={{ color: "#666" }}>Solo por tiempo limitado</p>
         </div>
 
         <IonGrid>
           <IonRow>
-            {pizzas.map((pizza, index) => (
+            {specialOffers.map((pizza, index) => (
               <IonCol size="12" sizeMd="6" sizeLg="4" key={index}>
                 <PizzaCard {...pizza} />
               </IonCol>
@@ -108,4 +109,4 @@ const Tab1: React.FC = () => {
   );
 };
 
-export default Tab1;
+export default Ofertas;

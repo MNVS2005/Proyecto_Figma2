@@ -29,7 +29,7 @@ const Splash: React.FC = () => {
     <IonPage>
       <IonContent fullscreen className="splash-content">
         <div className={`logo ${showLogo ? "show" : ""}`} ref={logoRef}>
-          <img src="/assets/logo.png" alt="Logo" />
+          <img src="/logo.png" alt="Logo" />
         </div>
 
         <div className={`welcome-text ${showText ? "show" : ""}`} ref={textRef}>

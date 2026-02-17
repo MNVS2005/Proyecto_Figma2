@@ -9,6 +9,7 @@ import {
 } from "@ionic/react";
 import { remove, add } from "ionicons/icons";
 import { useState } from "react";
+import { useCart } from "../context/CartContext";
 
 interface PizzaProps {
   name: string;
@@ -26,6 +27,17 @@ const PizzaCard: React.FC<PizzaProps> = ({
   image,
 }) => {
   const [qty, setQty] = useState(1);
+  const { addItem } = useCart();
+
+  const handleAddToCart = () => {
+    addItem({
+      name,
+      price,
+      quantity: qty,
+      image
+    });
+    setQty(1); // Reiniciar cantidad después de agregar
+  };
 
   return (
     <IonCard>
@@ -58,7 +70,7 @@ const PizzaCard: React.FC<PizzaProps> = ({
             <IonIcon icon={add} />
           </IonButton>
 
-          <IonButton color="danger" style={{ marginLeft: "auto" }}>
+          <IonButton color="danger" style={{ marginLeft: "auto" }} onClick={handleAddToCart}>
             Agregar
           </IonButton>
         </div>
