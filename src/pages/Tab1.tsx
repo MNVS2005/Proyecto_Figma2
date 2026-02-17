@@ -38,7 +38,29 @@ const pizzas = [
     ingredients: "Tomate, mozzarella, jamón, piña",
     price: 11.99,
     image: "/hawaiana.png"
+  },
+  {
+    name: "Pizza Vegetariana",
+    description: "Una opción fresca y saludable para los amantes de las verduras",
+    ingredients: "Tomate, mozzarella, pimientos, cebolla, champiñones, aceitunas",
+    price: 9.99,
+    image: "/vegetariana.png"
+  },
+  {
+    name: "Pizza BBQ de pollo",
+    description: "Sabor ahumado con un toque de barbacoa",
+    ingredients: "Salsa BBQ, mozzarella, pollo, cebolla roja, cilantro",
+    price: 12.99,
+    image: "/bbq pollo.png"
+  },
+  {
+    name:"Pizza 4 Carnes",
+    description: "Para los amantes de la carne, una explosión de sabor",
+    ingredients: "Tomate, mozzarella, pepperoni, jamón, salchicha, bacon",
+    price: 13.99,
+    image: "/4 carnes.png"
   }
+  
 ];
 
 const Tab1: React.FC = () => {

@@ -75,9 +75,7 @@
               <Route exact path="/">
                 <Redirect to="/splash" />
               </Route>
-              
             </IonRouterOutlet>
-            
           </IonTabs>
         </IonReactRouter>
       </IonApp>

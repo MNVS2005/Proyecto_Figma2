@@ -14,7 +14,8 @@ import {
 } from "@ionic/react";
 import { close, remove, add, trash } from "ionicons/icons";
 import { useCart } from "../context/CartContext";
-import { useRef } from "react";
+import { useState, useRef } from "react";
+import CheckoutModal from "./CheckoutModal";
 
 interface CartModalProps {
   isOpen: boolean;
@@ -24,6 +25,7 @@ interface CartModalProps {
 const CartModal = ({ isOpen, onClose }: CartModalProps) => {
   const { items, removeItem, updateQuantity, total, clearCart } = useCart();
   const modal = useRef<HTMLIonModalElement>(null);
+  const [showCheckout, setShowCheckout] = useState(false);
 
   return (
     <IonModal ref={modal} isOpen={isOpen} onDidDismiss={onClose}>
@@ -86,7 +88,12 @@ const CartModal = ({ isOpen, onClose }: CartModalProps) => {
                 </strong>
               </div>
 
-              <IonButton expand="block" color="danger" style={{ marginBottom: "8px" }}>
+              <IonButton
+                expand="block"
+                color="danger"
+                style={{ marginBottom: "8px" }}
+                onClick={() => setShowCheckout(true)}
+              >
                 Confirmar Compra
               </IonButton>
 
@@ -104,6 +111,15 @@ const CartModal = ({ isOpen, onClose }: CartModalProps) => {
           </>
         )}
       </IonContent>
+
+      <CheckoutModal
+        isOpen={showCheckout}
+        onClose={() => {
+          setShowCheckout(false);
+          onClose();
+        }}
+        total={total}
+      />
     </IonModal>
   );
 };
