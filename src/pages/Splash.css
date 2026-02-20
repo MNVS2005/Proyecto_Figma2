@@ -1,0 +1,56 @@
+.splash-content {
+  --background: #d50000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.8s ease;
+ left: 0;
+    line-height: 200px;
+    margin-top: -100px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 100%;
+}
+
+.logo.show {
+  opacity: 1;
+  transform: scale(2);
+}
+
+.logo img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: white;
+  padding: 12px;
+ 
+}
+
+.welcome-text {
+  margin-top: 24px;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
+  left: 0;
+    line-height: 200px;
+    margin-top: -100px;
+    position: absolute;
+    text-align: center;
+    top: 60%;
+    width: 100%;
+}
+
+.welcome-text.show {
+  opacity: 1;
+  transform: translateY(0);
+}
