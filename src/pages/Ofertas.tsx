@@ -41,11 +41,25 @@ const specialOffers = [
     image: "/hawaiana.png"
   },
   {
-    name: "Pizza Cuatro Quesos",
-    description: "¡EXCLUSIVA! Blend especial de cuatro quesos - 45% OFF",
-    ingredients: "Mozzarella, cheddar, azul, ricotta",
-    price: 6.49,
-    image: "/margarita.png"
+    name: "Pizza BBQ de pollo",
+    description: "¡OFERTA! Sabor ahumado con un toque de barbacoa - 30% OFF",
+    ingredients: "Salsa BBQ, mozzarella, pollo, cebolla roja, cilantro",
+    price: 9.09,
+    image: "/bbq%20pollo.png"
+  },
+  {
+    name:"Pizza 4 Carnes",  
+    description: "¡OFERTA! Una pizza con cuatro tipos de carne - 35% OFF",
+    ingredients: "Carne molida, jamón, salchicha, chorizo",
+    price: 8.99,
+    image: "/4%20carnes.png"
+  },
+  {
+    name: "Pizza Vegetariana",
+    description: "¡OFERTA! Una opción fresca y saludable para los amantes de las verduras - 25% OFF",
+    ingredients: "Tomate, mozzarella, pimientos, cebolla, champiñones, aceitunas",
+    price: 7.49,
+    image: "/vegetariana.png"
   }
 ];
 
