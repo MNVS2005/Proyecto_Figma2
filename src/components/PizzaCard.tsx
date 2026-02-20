@@ -1,12 +1,4 @@
-import {
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardTitle,
-  IonButton,
-  IonIcon,
-  IonText
-} from "@ionic/react";
+import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonText } from "@ionic/react";
 import { remove, add } from "ionicons/icons";
 import { useState } from "react";
 import { useCart } from "../context/CartContext";
@@ -59,20 +51,20 @@ const PizzaCard: React.FC<PizzaProps> = ({
           {price.toFixed(2)}€
         </h2>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <IonButton size="small" onClick={() => setQty(q => Math.max(1, q - 1))}>
+        <div className="d-flex align-items-center gap-2">
+          <button className="btn btn-outline-secondary btn-sm" onClick={() => setQty(q => Math.max(1, q - 1))}>
             <IonIcon icon={remove} />
-          </IonButton>
+          </button>
 
-          <IonText>{qty}</IonText>
+          <span className="fw-bold">{qty}</span>
 
-          <IonButton size="small" onClick={() => setQty(q => q + 1)}>
+          <button className="btn btn-outline-secondary btn-sm" onClick={() => setQty(q => q + 1)}>
             <IonIcon icon={add} />
-          </IonButton>
+          </button>
 
-          <IonButton color="danger" style={{ marginLeft: "auto" }} onClick={handleAddToCart}>
+          <button className="btn btn-danger btn-sm ms-auto" onClick={handleAddToCart}>
             Agregar
-          </IonButton>
+          </button>
         </div>
       </IonCardContent>
     </IonCard>
