@@ -17,8 +17,10 @@ import { useHistory } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import CartModal from "../components/CartModal";
 import { useState } from "react";
+
 const pizzas = [
   {
+    id: 1,
     name: "Pizza Margarita",
     description: "Clásica pizza italiana con sabores tradicionales",
     ingredients: "Tomate, mozzarella, albahaca",
@@ -26,6 +28,7 @@ const pizzas = [
     image: "/margarita.png"
   },
   {
+    id: 2,
     name: "Pizza Pepperoni",
     description: "La favorita de todos con extra de pepperoni",
     ingredients: "Tomate, mozzarella, pepperoni",
@@ -33,6 +36,7 @@ const pizzas = [
     image: "/pepperoni.png"
   },
   {
+    id: 3,
     name: "Pizza Hawaiana",
     description: "Dulce y salada, una combinación única",
     ingredients: "Tomate, mozzarella, jamón, piña",
@@ -40,6 +44,7 @@ const pizzas = [
     image: "/hawaiana.png"
   },
   {
+    id: 4,
     name: "Pizza Vegetariana",
     description: "Una opción fresca y saludable para los amantes de las verduras",
     ingredients: "Tomate, mozzarella, pimientos, cebolla, champiñones, aceitunas",
@@ -47,6 +52,7 @@ const pizzas = [
     image: "/vegetariana.png"
   },
   {
+    id: 5,
     name: "Pizza BBQ de pollo",
     description: "Sabor ahumado con un toque de barbacoa",
     ingredients: "Salsa BBQ, mozzarella, pollo, cebolla roja, cilantro",
@@ -54,14 +60,15 @@ const pizzas = [
     image: "/bbq pollo.png"
   },
   {
+    id: 6,
     name:"Pizza 4 Carnes",
     description: "Para los amantes de la carne, una explosión de sabor",
     ingredients: "Tomate, mozzarella, pepperoni, jamón, salchicha, bacon",
     price: 13.99,
     image: "/4 carnes.png"
   }
-  
 ];
+
 
 const Tab1: React.FC = () => {
   const history = useHistory();
@@ -115,14 +122,14 @@ const Tab1: React.FC = () => {
         </div>
 
         <IonGrid>
-          <IonRow>
-            {pizzas.map((pizza, index) => (
-              <IonCol size="12" sizeMd="6" sizeLg="4" key={index}>
-                <PizzaCard {...pizza} />
-              </IonCol>
-            ))}
-          </IonRow>
-        </IonGrid>
+      <IonRow>
+        {pizzas.map((pizza) => (
+          <IonCol size="12" sizeMd="6" sizeLg="4" key={pizza.id}>
+            <PizzaCard {...pizza} />
+          </IonCol>
+       ))}
+      </IonRow>
+    </IonGrid>
       </IonContent>
 
       <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />

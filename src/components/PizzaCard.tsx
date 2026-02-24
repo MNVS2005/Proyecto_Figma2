@@ -10,8 +10,10 @@ import {
 import { remove, add } from "ionicons/icons";
 import { useState } from "react";
 import { useCart } from "../context/CartContext";
+import { useHistory } from "react-router-dom";
 
 interface PizzaProps {
+  id: number;
   name: string;
   description: string;
   ingredients: string;
@@ -20,6 +22,7 @@ interface PizzaProps {
 }
 
 const PizzaCard: React.FC<PizzaProps> = ({
+  id,
   name,
   description,
   ingredients,
@@ -28,6 +31,7 @@ const PizzaCard: React.FC<PizzaProps> = ({
 }) => {
   const [qty, setQty] = useState(1);
   const { addItem } = useCart();
+  const history = useHistory();   // ⭐ ESTA ES LA LÍNEA QUE TE FALTABA
 
   const handleAddToCart = () => {
     addItem({
@@ -36,16 +40,16 @@ const PizzaCard: React.FC<PizzaProps> = ({
       quantity: qty,
       image
     });
-    setQty(1); // Reiniciar cantidad después de agregar
+    setQty(1);
   };
 
   return (
-    <IonCard>
-       <img src={image} alt={name} style={{
-    width: "100%",
-    height: "500px",
-    objectFit: "cover"
-  }} />
+    <IonCard onClick={() => history.push(`/pizza/${id}`)}>   {/* ⭐ NAVEGACIÓN */}
+      <img src={image} alt={name} style={{
+        width: "100%",
+        height: "500px",
+        objectFit: "cover"
+      }} />
 
       <IonCardHeader>
         <IonCardTitle>{name}</IonCardTitle>
@@ -60,17 +64,21 @@ const PizzaCard: React.FC<PizzaProps> = ({
         </h2>
 
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <IonButton size="small" onClick={() => setQty(q => Math.max(1, q - 1))}>
+          <IonButton size="small" onClick={(e) => { e.stopPropagation(); setQty(q => Math.max(1, q - 1)); }}>
             <IonIcon icon={remove} />
           </IonButton>
 
           <IonText>{qty}</IonText>
 
-          <IonButton size="small" onClick={() => setQty(q => q + 1)}>
+          <IonButton size="small" onClick={(e) => { e.stopPropagation(); setQty(q => q + 1); }}>
             <IonIcon icon={add} />
           </IonButton>
 
-          <IonButton color="danger" style={{ marginLeft: "auto" }} onClick={handleAddToCart}>
+          <IonButton
+            color="danger"
+            style={{ marginLeft: "auto" }}
+            onClick={(e) => { e.stopPropagation(); handleAddToCart(); }}
+          >
             Agregar
           </IonButton>
         </div>
