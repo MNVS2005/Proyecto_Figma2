@@ -1,53 +1,36 @@
-import {
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonAvatar,
-  IonItem,
-  IonLabel,
-  IonButton
-} from "@ionic/react";
+import React from "react";
 
 import { useHistory } from "react-router-dom";
 
 const Profile: React.FC = () => {
   const history = useHistory();
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar color="danger">
-          <IonTitle>Mi Perfil</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-
-      <IonContent className="ion-padding">
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
-          <IonAvatar style={{ margin: "0 auto", width: "100px", height: "100px" }}>
-            <img src="https://i.pravatar.cc/150?img=3" alt="avatar" />
-          </IonAvatar>
+    <div className="container mt-5" style={{ maxWidth: 400 }}>
+      <div className="text-center mb-4">
+        <img
+          src="https://i.pravatar.cc/150?img=3"
+          alt="avatar"
+          className="rounded-circle border border-danger"
+          style={{ width: 100, height: 100 }}
+        />
+      </div>
+      <div className="card mb-4">
+        <div className="card-body text-center">
+          <h2 className="card-title mb-1">Juan Pérez</h2>
+          <p className="card-text text-muted">juan@email.com</p>
         </div>
-
-        <IonItem>
-          <IonLabel>
-            <h2>Juan Pérez</h2>
-            <p>juan@email.com</p>
-          </IonLabel>
-        </IonItem>
-
-        <IonButton
-            expand="block"
-            color="danger"
-            style={{ marginTop: "20px" }}
-            onClick={() => {
-              localStorage.removeItem("isAuth"); // 🔐 borrar sesión
-              history.push("/login");         // 🚀 ir al login
-            }} >
-  Cerrar sesión
-</IonButton>
-      </IonContent>
-    </IonPage>
+      </div>
+      <button
+        className="btn btn-danger w-100"
+        style={{ marginTop: 20 }}
+        onClick={() => {
+          localStorage.removeItem("isAuth");
+          history.push("/login");
+        }}
+      >
+        Cerrar sesión
+      </button>
+    </div>
   );
 };
 
