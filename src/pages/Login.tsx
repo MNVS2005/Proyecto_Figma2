@@ -1,5 +1,15 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import {
+  IonPage,
+  IonContent,
+  IonInput,
+  IonButton,
+  IonItem,
+  IonLabel,
+  IonTitle,
+  IonText
+} from "@ionic/react";
+import { useState } from "react";
+import { useHistory } from "react-router";
 
 const Login: React.FC = () => {
   const history = useHistory();
@@ -8,13 +18,9 @@ const Login: React.FC = () => {
   const [error, setError] = useState("");
 
   const handleLogin = () => {
-    // 🔹 Aquí luego conectas con tu API
-    if (email === "test@test.com" && password === "1234") {
-      localStorage.setItem("isAuth", "true");
-      history.replace("/tab1");
-    } else {
-      setError("Credenciales incorrectas");
-    }
+    // Acceso sin verificación ni API
+    localStorage.setItem("isAuth", "true");
+    history.replace("/tab1");
   };
 
   return (
