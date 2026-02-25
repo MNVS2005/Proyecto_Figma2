@@ -1,18 +1,6 @@
-import {
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonButton
-} from "@ionic/react";
-
+import { IonPage, IonContent, IonGrid, IonRow, IonCol, IonButton, IonIcon } from "@ionic/react";
 import PizzaCard from "../components/PizzaCard";
 import { personCircle, cart } from "ionicons/icons";
-import { IonIcon, IonButtons } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import CartModal from "../components/CartModal";
@@ -70,37 +58,29 @@ const Tab1: React.FC = () => {
   
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar style={{ "--background": "#d50000", color: "white" }}>
-          <IonTitle>
-            ¡Bienvenido a PizzaUP <br />
+      <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#d50000" }}>
+        <div className="container-fluid">
+          <span className="navbar-brand mb-0 h4 text-white" style={{ cursor: "default" }}>
+            ¡Bienvenido a PizzaUP
             <div style={{ fontSize: "14px" }}>¿Qué desea?</div>
-          </IonTitle>
-          <IonButtons slot="end">
-            <IonButton onClick={() => setIsCartOpen(true)} style={{ position: "relative" }}>
+          </span>
+
+          <div className="d-flex align-items-center">
+            <button className="btn btn-link text-white position-relative me-2" onClick={() => setIsCartOpen(true)} style={{ textDecoration: "none" }}>
               <IonIcon icon={cart} style={{ fontSize: "28px", color: "white" }} />
               {items.length > 0 && (
-                <div style={{
-                  position: "absolute",
-                  top: "0",
-                  right: "0",
-                  backgroundColor: "#ff8a50",
-                  color: "white",
-                  borderRadius: "50%",
-                  padding: "2px 6px",
-                  fontSize: "12px",
-                  fontWeight: "bold"
-                }}>
+                <span className="badge bg-warning text-dark position-absolute" style={{ top: "0", right: "0", transform: "translate(50%,-50%)" }}>
                   {items.length}
-                </div>
+                </span>
               )}
-            </IonButton>
-            <IonButton onClick={() => history.push("/profile")}>
+            </button>
+
+            <button className="btn btn-link text-white" onClick={() => history.push("/profile")} style={{ textDecoration: "none" }}>
               <IonIcon icon={personCircle} style={{ fontSize: "28px", color: "white" }} />
-            </IonButton>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
+            </button>
+          </div>
+        </div>
+      </nav>
 
       <IonContent>
         <div style={{ padding: "16px", textAlign: "center" }}>

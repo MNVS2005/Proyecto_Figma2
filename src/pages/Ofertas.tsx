@@ -1,16 +1,4 @@
-import {
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonButton,
-  IonButtons,
-  IonIcon
-} from "@ionic/react";
+import { IonPage, IonContent, IonGrid, IonRow, IonCol, IonIcon } from "@ionic/react";
 import { arrowBack, cart } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
 import PizzaCard from "../components/PizzaCard";
@@ -70,36 +58,27 @@ const Ofertas: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar style={{ "--background": "#d50000" } as any}>
-          <IonButtons slot="start">
-            <IonButton onClick={() => history.push("/tab1")}>
-              <IonIcon icon={arrowBack} style={{ color: "white" }} />
-            </IonButton>
-          </IonButtons>
-          <IonTitle style={{ color: "white" }}>¡OFERTAS ESPECIALES!</IonTitle>
-          <IonButtons slot="end">
-            <IonButton onClick={() => setIsCartOpen(true)} style={{ position: "relative" }}>
+      <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#d50000" }}>
+        <div className="container-fluid">
+          <button className="btn btn-link text-white me-2" onClick={() => history.push("/tab1")}
+            style={{ textDecoration: "none" }}>
+            <IonIcon icon={arrowBack} style={{ fontSize: "28px", color: "white" }} />
+          </button>
+          <span className="navbar-brand mb-0 h4 text-white" style={{ cursor: "default" }}>
+            ¡OFERTAS ESPECIALES!
+          </span>
+          <div className="d-flex align-items-center">
+            <button className="btn btn-link text-white position-relative" onClick={() => setIsCartOpen(true)} style={{ textDecoration: "none" }}>
               <IonIcon icon={cart} style={{ fontSize: "28px", color: "white" }} />
               {items.length > 0 && (
-                <div style={{
-                  position: "absolute",
-                  top: "0",
-                  right: "0",
-                  backgroundColor: "#ff8a50",
-                  color: "white",
-                  borderRadius: "50%",
-                  padding: "2px 6px",
-                  fontSize: "12px",
-                  fontWeight: "bold"
-                }}>
+                <span className="badge bg-warning text-dark position-absolute" style={{ top: "0", right: "0", transform: "translate(50%,-50%)" }}>
                   {items.length}
-                </div>
+                </span>
               )}
-            </IonButton>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
+            </button>
+          </div>
+        </div>
+      </nav>
 
       <IonContent>
         <div style={{ padding: "16px", textAlign: "center" }}>

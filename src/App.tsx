@@ -18,6 +18,7 @@
   import PrivateRoute from "./routes/PrivateRoute";
   import Profile from "./pages/Profile";
   import { CartProvider } from "./context/CartContext";
+  import Signup from "./pages/Signup";
 
   /* Core CSS required for Ionic components to work properly */
   import '@ionic/react/css/core.css';
@@ -60,9 +61,12 @@
               <Route exact path="/splash">
                     <Splash />
               </Route>
-              <Route exact path="/login">
+                <Route exact path="/login">
                   <Login />
-              </Route>
+                </Route>
+                <Route exact path="/signup">
+                  <Signup />
+                </Route>
               <Route path="/tab1">
                 <Tab1 />
               </Route>
