@@ -39,6 +39,7 @@ const PizzaCard: React.FC<PizzaProps> = ({
       image
     });
     setQty(1);
+    
   };
 
   return (

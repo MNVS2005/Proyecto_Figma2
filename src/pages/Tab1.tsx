@@ -7,7 +7,8 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonButton
+  IonButton,
+  IonSearchbar
 } from "@ionic/react";
 
 import PizzaCard from "../components/PizzaCard";
@@ -93,6 +94,17 @@ const Tab1: React.FC = () => {
             ¡Bienvenido/a a PizzUp! <br />
             <div style={{ fontSize: "14px" }}>¿Qué desea?</div>
           </IonTitle>
+            {/* Input de búsqueda */}
+          <div style={{ flex: 1, maxWidth: 300, margin: "0 16px" }}>
+            <IonSearchbar
+              value={search}
+              onIonChange={e => setSearch(e.detail.value!)}
+              placeholder="Buscar pizza..."
+              inputmode="search"
+              style={{ "--background": "#fff3e0", "--color": "#d50000", borderRadius: 20 }}
+            />
+          </div>
+
           <IonButtons slot="end">
             <IonButton onClick={() => setIsCartOpen(true)} style={{ position: "relative" }}>
               <IonIcon icon={cart} style={{ fontSize: "28px", color: "white" }} />
@@ -133,7 +145,7 @@ const Tab1: React.FC = () => {
 
         <IonGrid>
       <IonRow>
-        {pizzas.map((pizza) => (
+        {filteredPizzas.map((pizza) => (
           <IonCol size="12" sizeMd="6" sizeLg="4" key={pizza.id}>
             <PizzaCard {...pizza} />
           </IonCol>
