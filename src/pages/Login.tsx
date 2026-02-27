@@ -1,61 +1,97 @@
 import {
   IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
   IonContent,
-  IonInput,
-  IonButton,
   IonItem,
   IonLabel,
-  IonTitle,
+  IonInput,
+  IonButton,
   IonText
 } from "@ionic/react";
 import { useState } from "react";
 import { useHistory } from "react-router";
+import { useUser } from "../context/UserContext";
 
 const Login: React.FC = () => {
   const history = useHistory();
+  const { login } = useUser();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const handleLogin = () => {
-    // Acceso sin verificación ni API
-    localStorage.setItem("isAuth", "true");
-    history.replace("/tab1");
+    setError(null);
+
+    if (!email || !password) {
+      setError("Por favor, rellena todos los campos.");
+      return;
+    }
+
+    login();
+    history.replace("/profile");
   };
 
   return (
-    <div className="container mt-5" style={{ maxWidth: 400 }}>
-      <h2 className="mb-4 text-center">Iniciar Sesión</h2>
-      <form onSubmit={e => { e.preventDefault(); handleLogin(); }}>
-        <div className="mb-3">
-          <label className="form-label">Correo</label>
-          <input
+    <IonPage>
+      <IonHeader>
+        <IonToolbar color="danger">
+          <IonTitle style={{ color: "white" }}>Iniciar sesión</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+
+      <IonContent className="ion-padding">
+
+        <IonItem>
+          <IonLabel position="floating">Correo electrónico</IonLabel>
+          <IonInput
             type="email"
-            className="form-control"
             value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
+            onIonChange={(e) => setEmail(e.detail.value!)}
           />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Contraseña</label>
-          <input
+        </IonItem>
+
+        <IonItem style={{ marginTop: "15px" }}>
+          <IonLabel position="floating">Contraseña</IonLabel>
+          <IonInput
             type="password"
-            className="form-control"
             value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
+            onIonChange={(e) => setPassword(e.detail.value!)}
           />
-        </div>
+        </IonItem>
+
         {error && (
-          <div className="alert alert-danger py-1 text-center">{error}</div>
+          <IonText color="danger">
+            <p style={{ marginTop: "10px" }}>{error}</p>
+          </IonText>
         )}
-        <button type="submit" className="btn btn-danger w-100 mt-2">Entrar</button>
-      </form>
-      <div className="text-center mt-3">
-        ¿No tienes cuenta? <a href="/signup">Regístrate</a>
-      </div>
-    </div>
+
+        <IonButton
+          expand="block"
+          color="danger"
+          style={{ marginTop: "25px" }}
+          onClick={handleLogin}
+        >
+          Entrar
+        </IonButton>
+
+        <IonText style={{ display: "block", marginTop: "20px", textAlign: "center" }}>
+          ¿No tienes cuenta?
+        </IonText>
+
+        <IonButton
+          expand="block"
+          fill="clear"
+          color="primary"
+          onClick={() => history.push("/signup")}
+        >
+          Registrarse
+        </IonButton>
+
+      </IonContent>
+    </IonPage>
   );
 };
 
