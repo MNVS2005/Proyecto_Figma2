@@ -74,7 +74,17 @@ const Tab1: React.FC = () => {
   const history = useHistory();
   const { items } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
-  
+  const [search, setSearch] = useState(""); // Estado para búsqueda
+
+  // Filtra las pizzas según el término de búsqueda
+  const filteredPizzas = search.trim() === ""
+    ? pizzas
+    : pizzas.filter(
+        (pizza) =>
+          pizza.name.toLowerCase().includes(search.toLowerCase()) ||
+          pizza.ingredients.toLowerCase().includes(search.toLowerCase())
+      );
+
   return (
     <IonPage>
       <IonHeader>
