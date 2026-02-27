@@ -1,4 +1,4 @@
-import { IonPage, IonContent, IonGrid, IonRow, IonCol, IonButton, IonIcon } from "@ionic/react";
+import { IonPage, IonContent, IonGrid, IonRow, IonCol, IonButton, IonIcon, IonSearchbar } from "@ionic/react";
 import PizzaCard from "../components/PizzaCard";
 import { personCircle, cart } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
@@ -55,7 +55,17 @@ const Tab1: React.FC = () => {
   const history = useHistory();
   const { items } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
-  
+  const [search, setSearch] = useState(""); // Estado para búsqueda
+
+  // Filtra las pizzas según el término de búsqueda
+  const filteredPizzas = search.trim() === ""
+    ? pizzas
+    : pizzas.filter(
+        (pizza) =>
+          pizza.name.toLowerCase().includes(search.toLowerCase()) ||
+          pizza.ingredients.toLowerCase().includes(search.toLowerCase())
+      );
+
   return (
     <IonPage>
       <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#d50000" }}>
@@ -64,6 +74,17 @@ const Tab1: React.FC = () => {
             ¡Bienvenido a PizzaUP
             <div style={{ fontSize: "14px" }}>¿Qué desea?</div>
           </span>
+
+          {/* Input de búsqueda */}
+          <div style={{ flex: 1, maxWidth: 300, margin: "0 16px" }}>
+            <IonSearchbar
+              value={search}
+              onIonChange={e => setSearch(e.detail.value!)}
+              placeholder="Buscar pizza..."
+              inputmode="search"
+              style={{ "--background": "#fff3e0", "--color": "#d50000", borderRadius: 20 }}
+            />
+          </div>
 
           <div className="d-flex align-items-center">
             <button className="btn btn-link text-white position-relative me-2" onClick={() => setIsCartOpen(true)} style={{ textDecoration: "none" }}>
@@ -96,7 +117,7 @@ const Tab1: React.FC = () => {
 
         <IonGrid>
           <IonRow>
-            {pizzas.map((pizza, index) => (
+            {filteredPizzas.map((pizza, index) => (
               <IonCol size="12" sizeMd="6" sizeLg="4" key={index}>
                 <PizzaCard {...pizza} />
               </IonCol>

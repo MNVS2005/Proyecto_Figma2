@@ -28,7 +28,8 @@ const PizzaCard: React.FC<PizzaProps> = ({
       quantity: qty,
       image
     });
-    setQty(1); // Reiniciar cantidad después de agregar
+    setQty(1); // Reiniciar cantidad después de agregar al carrito
+    alert(`${qty} ${name}(s) agregado(s) al carrito`); // Feedback al usuario
   };
 
   return (
