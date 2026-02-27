@@ -8,41 +8,59 @@ import {
   IonLabel,
   IonInput,
   IonButton,
-  IonText
+  IonText,
+  IonButtons,
+  IonBackButton
 } from "@ionic/react";
+
 import { useState } from "react";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 
-const Login: React.FC = () => {
+const Signup: React.FC = () => {
   const history = useHistory();
-  const { login } = useUser();
+  const { register } = useUser();
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = () => {
+  const handleSignup = () => {
     setError(null);
 
-    if (!email || !password) {
+    if (!name || !email || !password) {
       setError("Por favor, rellena todos los campos.");
       return;
     }
 
-    login();
-    history.replace("/profile");
+  
+    register();
+
+  
+    history.push("/profile");
   };
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar color="danger">
-          <IonTitle style={{ color: "white" }}>Iniciar sesión</IonTitle>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/login" />
+          </IonButtons>
+          <IonTitle style={{ color: "white" }}>Crear cuenta</IonTitle>
         </IonToolbar>
       </IonHeader>
 
       <IonContent className="ion-padding">
+
+        <IonItem>
+          <IonLabel position="floating">Nombre de usuario</IonLabel>
+          <IonInput
+            value={name}
+            onIonChange={(e) => setName(e.detail.value!)}
+          />
+        </IonItem>
 
         <IonItem>
           <IonLabel position="floating">Correo electrónico</IonLabel>
@@ -53,7 +71,7 @@ const Login: React.FC = () => {
           />
         </IonItem>
 
-        <IonItem style={{ marginTop: "15px" }}>
+        <IonItem>
           <IonLabel position="floating">Contraseña</IonLabel>
           <IonInput
             type="password"
@@ -71,23 +89,20 @@ const Login: React.FC = () => {
         <IonButton
           expand="block"
           color="danger"
-          style={{ marginTop: "25px" }}
-          onClick={handleLogin}
+          style={{ marginTop: "20px" }}
+          onClick={handleSignup}
         >
-          Entrar
+          Registrarse
         </IonButton>
-
-        <IonText style={{ display: "block", marginTop: "20px", textAlign: "center" }}>
-          ¿No tienes cuenta?
-        </IonText>
 
         <IonButton
           expand="block"
           fill="clear"
-          color="primary"
-          onClick={() => history.push("/signup")}
+          color="medium"
+          style={{ marginTop: "10px" }}
+          onClick={() => history.push("/login")}
         >
-          Registrarse
+          Ya tengo cuenta
         </IonButton>
 
       </IonContent>
@@ -95,4 +110,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Signup;

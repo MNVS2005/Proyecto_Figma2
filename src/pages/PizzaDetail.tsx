@@ -9,19 +9,23 @@ import {
   IonItem,
   IonLabel,
   IonRadio,
-  IonRadioGroup
+  IonRadioGroup,
+  IonButtons,
+  IonIcon
 } from "@ionic/react";
+import { arrowBack, cart } from "ionicons/icons";
 import { useParams, useHistory } from "react-router-dom";
 import { useState } from "react";
 import { useCart } from "../context/CartContext";
+import CartModal from "../components/CartModal";
 
 const pizzas = [
   { id: 1, name: "Pizza Margarita", description: "Clásica pizza italiana con sabores tradicionales", ingredients: "Tomate, mozzarella, albahaca", price: 8.99, image: "/margarita.png" },
   { id: 2, name: "Pizza Pepperoni", description: "La favorita de todos con extra de pepperoni", ingredients: "Tomate, mozzarella, pepperoni", price: 10.99, image: "/pepperoni.png" },
   { id: 3, name: "Pizza Hawaiana", description: "Dulce y salada, una combinación única", ingredients: "Tomate, mozzarella, jamón, piña", price: 11.99, image: "/hawaiana.png" },
-  { id: 4, name: "Pizza Vegetariana", description: "Una opción fresca y saludable para los amantes de las verduras", ingredients: "Tomate, mozzarella, pimientos, cebolla, champiñones, aceitunas", price: 9.99, image: "/vegetariana.png" },
+  { id: 4, name: "Pizza Vegetariana", description: "Una opción fresca y saludable", ingredients: "Tomate, mozzarella, pimientos, cebolla, champiñones, aceitunas", price: 9.99, image: "/vegetariana.png" },
   { id: 5, name: "Pizza BBQ de pollo", description: "Sabor ahumado con un toque de barbacoa", ingredients: "Salsa BBQ, mozzarella, pollo, cebolla roja, cilantro", price: 12.99, image: "/bbq pollo.png" },
-  { id: 6, name:"Pizza 4 Carnes", description: "Para los amantes de la carne, una explosión de sabor", ingredients: "Tomate, mozzarella, pepperoni, jamón, salchicha, bacon", price: 13.99, image: "/4 carnes.png" }
+  { id: 6, name:"Pizza 4 Carnes", description: "Para los amantes de la carne", ingredients: "Tomate, mozzarella, pepperoni, jamón, salchicha, bacon", price: 13.99, image: "/4 carnes.png" }
 ];
 
 const reviewsData = {
@@ -38,7 +42,6 @@ const reviewsData = {
   6: []
 };
 
-// ⭐ Extras
 const extrasList = [
   { name: "Extra queso", price: 1 },
   { name: "Extra pepperoni", price: 1.5 },
@@ -46,34 +49,29 @@ const extrasList = [
   { name: "Champiñones extra", price: 1 }
 ];
 
-// ⭐ Tamaños
 const sizes = [
   { name: "Pequeña", price: 0 },
   { name: "Mediana", price: 2 },
   { name: "Familiar", price: 4 }
 ];
 
-interface RouteParams {
-  id: string;
-}
-
 const PizzaDetail: React.FC = () => {
-  const { id } = useParams<RouteParams>();
+  const { id } = useParams<{ id: string }>();
   const history = useHistory();
-  const { addToCart } = useCart();
+
+  // ✔️ USAMOS addItem, NO addToCart
+  const { addItem, items } = useCart();
 
   const pizzaId = parseInt(id, 10);
   const pizza = pizzas.find(p => p.id === pizzaId);
 
   const [reviews, setReviews] = useState(reviewsData[pizzaId]);
   const [selectedStars, setSelectedStars] = useState(0);
-
-  // ⭐ Estado para likes tipo interruptor
+  const [reviewText, setReviewText] = useState("");
   const [likedReviews, setLikedReviews] = useState<number[]>([]);
-
-  // ⭐ Extras y tamaños
   const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
   const [selectedSize, setSelectedSize] = useState("Pequeña");
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   if (!pizza) {
     return (
@@ -93,11 +91,9 @@ const PizzaDetail: React.FC = () => {
     );
   }
 
-  const renderStars = (count: number) => {
-    return "⭐".repeat(count) + "☆".repeat(5 - count);
-  };
+  const renderStars = (count: number) =>
+    "⭐".repeat(count) + "☆".repeat(5 - count);
 
-  // ⭐ Calcular precio final
   const basePrice = pizza.price;
   const sizePrice = sizes.find(s => s.name === selectedSize)?.price || 0;
   const extrasPrice = selectedExtras.reduce((acc, extra) => {
@@ -107,31 +103,58 @@ const PizzaDetail: React.FC = () => {
 
   const finalPrice = (basePrice + sizePrice + extrasPrice).toFixed(2);
 
-  // ⭐ Añadir al carrito
+  // ✔️ AHORA SÍ AÑADE AL CARRITO
   const handleAddToCart = () => {
-    addToCart({
-      id: pizza.id,
+    addItem({
       name: pizza.name,
       price: Number(finalPrice),
-      extras: selectedExtras,
-      size: selectedSize,
+      quantity: 1,
       image: pizza.image
     });
 
-    history.push("/tab1");
+    setIsCartOpen(true);
   };
 
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar style={{ "--background": "#d50000", color: "white" }}>
-          <IonTitle>{pizza.name}</IonTitle>
+        <IonToolbar color="danger">
+          <IonButtons slot="start">
+            <IonButton onClick={() => history.goBack()}>
+              <IonIcon icon={arrowBack} style={{ color: "white" }} />
+            </IonButton>
+          </IonButtons>
+
+          <IonTitle style={{ color: "white" }}>{pizza.name}</IonTitle>
+
+          {/* ✔️ ICONO DEL CARRITO CON BADGE */}
+          <IonButtons slot="end">
+            <IonButton onClick={() => setIsCartOpen(true)} style={{ position: "relative" }}>
+              <IonIcon icon={cart} style={{ color: "white", fontSize: "24px" }} />
+
+              {items.length > 0 && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "-2px",
+                    right: "-2px",
+                    backgroundColor: "#ff8a50",
+                    color: "white",
+                    borderRadius: "50%",
+                    padding: "2px 6px",
+                    fontSize: "12px",
+                    fontWeight: "bold"
+                  }}
+                >
+                  {items.length}
+                </div>
+              )}
+            </IonButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
 
       <IonContent className="ion-padding">
-
-        {/* ------------------ IMAGEN Y DESCRIPCIÓN ------------------ */}
 
         <img
           src={pizza.image}
@@ -154,8 +177,6 @@ const PizzaDetail: React.FC = () => {
           {pizza.price.toFixed(2)}€
         </h2>
 
-        {/* ------------------ TAMAÑOS ------------------ */}
-
         <h2 style={{ marginTop: "25px" }}>Tamaño</h2>
 
         <IonRadioGroup
@@ -169,8 +190,6 @@ const PizzaDetail: React.FC = () => {
             </IonItem>
           ))}
         </IonRadioGroup>
-
-        {/* ------------------ EXTRAS ------------------ */}
 
         <h2 style={{ marginTop: "25px" }}>Extras</h2>
 
@@ -191,24 +210,20 @@ const PizzaDetail: React.FC = () => {
           </IonItem>
         ))}
 
-        {/* ------------------ PRECIO FINAL ------------------ */}
-
         <h2 style={{ marginTop: "25px", color: "green" }}>
           Precio final: {finalPrice}€
         </h2>
 
-        {/* ------------------ BOTÓN AÑADIR AL CARRITO ------------------ */}
-
+        {/* ✔️ BOTÓN VERDE IGUAL QUE OFERTASDETAIL */}
         <IonButton
           expand="block"
           color="success"
           onClick={handleAddToCart}
           style={{ marginTop: "20px" }}
         >
+          <IonIcon icon={cart} slot="start" />
           Añadir al carrito
         </IonButton>
-
-        {/* ------------------ RESEÑAS ------------------ */}
 
         <h2 style={{ marginTop: "30px" }}>Reseñas</h2>
 
@@ -251,7 +266,10 @@ const PizzaDetail: React.FC = () => {
                   {review.user}
                 </strong>
 
-                <p style={{ margin: "5px 0" }}>{renderStars(review.stars)}</p>
+                {/* ✔️ ESTRELLAS IGUALES QUE OFERTASDETAIL */}
+                <p style={{ margin: "5px 0" }}>
+                  {"⭐".repeat(review.stars) + "☆".repeat(5 - review.stars)}
+                </p>
 
                 <p>{review.text}</p>
 
@@ -259,9 +277,10 @@ const PizzaDetail: React.FC = () => {
                   📅 {review.date}
                 </small>
 
-                {/* ⭐ BOTÓN LIKE TIPO INTERRUPTOR */}
+                {/* ✔️ CORAZONES IGUALES QUE OFERTASDETAIL */}
                 <IonButton
                   size="small"
+                  fill="clear"
                   color={isLiked ? "medium" : "danger"}
                   onClick={() => {
                     const updated = [...reviews];
@@ -284,8 +303,6 @@ const PizzaDetail: React.FC = () => {
           );
         })}
 
-        {/* ------------------ FORMULARIO RESEÑAS ------------------ */}
-
         <h3 style={{ marginTop: "20px" }}>Escribe tu reseña</h3>
 
         <p>Selecciona estrellas:</p>
@@ -306,7 +323,8 @@ const PizzaDetail: React.FC = () => {
         </div>
 
         <textarea
-          id="reviewInput"
+          value={reviewText}
+          onChange={(e) => setReviewText(e.target.value)}
           placeholder="Escribe tu opinión aquí..."
           style={{
             width: "100%",
@@ -316,32 +334,29 @@ const PizzaDetail: React.FC = () => {
             border: "1px solid #ccc",
             marginBottom: "10px"
           }}
-        ></textarea>
+        />
 
         <IonButton
           expand="block"
           color="primary"
           onClick={() => {
-            const input = document.getElementById("reviewInput") as HTMLTextAreaElement;
-            if (!input.value.trim() || selectedStars === 0) return;
+            if (!reviewText.trim() || selectedStars === 0) return;
 
             const newReview = {
               user: "Juan Pérez",
-              text: input.value,
+              text: reviewText,
               likes: 0,
               stars: selectedStars,
               date: new Date().toISOString().split("T")[0]
             };
 
             setReviews([...reviews, newReview]);
-            input.value = "";
+            setReviewText("");
             setSelectedStars(0);
           }}
         >
           Enviar reseña
         </IonButton>
-
-        {/* ------------------ BOTÓN VOLVER ------------------ */}
 
         <IonButton
           expand="block"
@@ -351,6 +366,8 @@ const PizzaDetail: React.FC = () => {
         >
           Volver
         </IonButton>
+
+        <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
 
       </IonContent>
     </IonPage>
